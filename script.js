@@ -107,3 +107,49 @@ function copyToClipboard (node) {
 	node.contentEditable=false
 	node.textContent=oldContent
 	}
+
+
+
+function compareLists () {
+    var left = document.getElementById('leftList').value
+    var right = document.getElementById('rightList').value
+    
+    var leftArray = [...left]
+    var rightArray = [...right]
+    
+    var leftResult = ''
+    var rightResult = ''
+    var bothResult = ''
+    
+    for (let i=0;i<leftArray.length;i++) {
+        var found = false
+        for (let j=0;j<rightArray.length;j++) {
+            if (leftArray[i] === rightArray[j]) { 
+				found = true
+				if (! bothResult.match(leftArray[i])) bothResult += leftArray[i]
+				break
+				}
+            }
+        if (! found && ! leftResult.match(leftArray[i])) leftResult += leftArray[i]+' '
+        }
+    document.getElementById('leftOut').textContent = leftResult
+
+    for (let i=0;i<rightArray.length;i++) {
+        var found = false
+        for (let j=0;j<leftArray.length;j++) {
+            if (rightArray[i] === leftArray[j]) { found = true; break }
+            }
+        if (! found && ! rightResult.match(rightArray[i])) rightResult += rightArray[i]+' '
+        }
+    document.getElementById('rightOut').textContent = rightResult
+	
+	var bothArray = [...bothResult]
+	bothArray = bothArray.filter((x, i, a) => a.indexOf(x) == i)
+    document.getElementById('bothOut').textContent = bothArray.join(' ')
+
+    }
+
+
+
+
+
