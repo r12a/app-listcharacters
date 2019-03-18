@@ -56,6 +56,9 @@ body > p {
     margin: 0;
     font-size: 90%;
 	}
+#comparisonInput div {
+    flex: 1;
+	}
 button {
     color: #0C3;
     font-size: 100%;
