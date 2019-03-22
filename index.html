@@ -20,8 +20,8 @@
 <script>document.getElementById('header-boilerplate').innerHTML = bp_appHeader('../shared/images/world.gif','List characters','');</script>
 </header>
 
-
-<p style="margin-bottom: 0;"><textarea id="in" style="width: 80%; height: 400px;" placeholder="Drop text to be analysed here."></textarea></p>
+<p style="margin-bottom:0; font-size: 60%; cursor: pointer;" onClick="document.getElementById('in').value = '';">Clear all</p>
+<p style="margin-bottom: 0; margin-top: 0;"><textarea id="in" style="width: 80%; height: 400px;" placeholder="Drop text to be analysed here."></textarea></p>
 <div style="text-align: center;">
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFC')">Convert to NFC</button>
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFD')">Convert to NFD</button>
@@ -36,10 +36,10 @@
     <summary style="margin-top: 5em; cursor: pointer;">Compare lists</summary>
     <div id="comparisonInput">
     <div><textarea name="left" id="leftList" cols="30" rows="10"></textarea><p id="leftResult">Characters unique to this side:<br/><span id="leftOut"></span></p></div>
+    <div style="margin: 2em;"><button onClick="compareLists()">Compare</button></div>
     <div><textarea name="right" id="rightList" cols="30" rows="10"></textarea><p id="rightResult">Characters unique to this side:<br/><span id="rightOut"></span></p></div>
     </div>
     <div style="font-size: 90%;"><p id="bothResult">Characters on both sides: &nbsp; <span id="bothOut"></span></p></div>
-    <div><button onClick="compareLists()">Compare</button></div>
     </details>
 
 
