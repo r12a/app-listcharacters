@@ -83,7 +83,9 @@ function makeList (stream) {
 			out += '<td class="count">'+count+'</td>'
 			}
 		else if (uniqueNeeded) out += '<td class="count"></td>'
-		out += '<td class="chars">'+scriptGroups[keys[x]].unique+'</td>'
+		let uniqueArray = [...scriptGroups[keys[x]].unique]
+		uniquelist = uniqueArray.sort().join('')
+		out += '<td class="chars">'+uniquelist+'</td>'
 		out += '<td class="select" title="Copy to clipboard" onclick="copyToClipboard(this.previousSibling)"><img src="copy.png"></td>'
 		out += '</tr>\n'
 		}
