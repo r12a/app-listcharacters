@@ -135,6 +135,7 @@ function compareLists () {
         if (! found && ! leftResult.includes(leftArray[i])) leftResult += leftArray[i]+' '
         }
     document.getElementById('leftOut').textContent = leftResult
+    document.getElementById('leftOutLink').href = "../app-analysestring/?chars="+leftResult
 
     for (let i=0;i<rightArray.length;i++) {
         var found = false
@@ -144,10 +145,12 @@ function compareLists () {
         if (! found && ! rightResult.includes(rightArray[i])) rightResult += rightArray[i]+' '
         }
     document.getElementById('rightOut').textContent = rightResult
+    document.getElementById('rightOutLink').href = "../app-analysestring/?chars="+rightResult
 	
 	var bothArray = [...bothResult]
 	bothArray = bothArray.filter((x, i, a) => a.indexOf(x) == i)
     document.getElementById('bothOut').textContent = bothArray.join(' ')
+    document.getElementById('bothOutLink').href = "../app-analysestring/?chars="+bothResult
 
     }
 
