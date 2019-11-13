@@ -128,11 +128,11 @@ function compareLists () {
         for (let j=0;j<rightArray.length;j++) {
             if (leftArray[i] === rightArray[j]) { 
 				found = true
-				if (! bothResult.match(leftArray[i])) bothResult += leftArray[i]
+				if (! bothResult.includes(leftArray[i])) bothResult += leftArray[i]
 				break
 				}
             }
-        if (! found && ! leftResult.match(leftArray[i])) leftResult += leftArray[i]+' '
+        if (! found && ! leftResult.includes(leftArray[i])) leftResult += leftArray[i]+' '
         }
     document.getElementById('leftOut').textContent = leftResult
 
@@ -141,7 +141,7 @@ function compareLists () {
         for (let j=0;j<leftArray.length;j++) {
             if (rightArray[i] === leftArray[j]) { found = true; break }
             }
-        if (! found && ! rightResult.match(rightArray[i])) rightResult += rightArray[i]+' '
+        if (! found && ! rightResult.includes(rightArray[i])) rightResult += rightArray[i]+' '
         }
     document.getElementById('rightOut').textContent = rightResult
 	
@@ -150,6 +150,7 @@ function compareLists () {
     document.getElementById('bothOut').textContent = bothArray.join(' ')
 
     }
+
 
 
 
