@@ -25,7 +25,14 @@
 <div style="text-align: center;">
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFC')">Convert to NFC</button>
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFD')">Convert to NFD</button>
-<button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFC')+document.getElementById('in').value.normalize('NFD'); document.getElementById('in').value = document.getElementById('in').value.toLowerCase()+document.getElementById('in').value.toUpperCase()">Get all forms</button>
+<button onClick="original=document.getElementById('in').value; 
+	nfc=document.getElementById('in').value.normalize('NFC');
+	nfd=document.getElementById('in').value.normalize('NFD');
+	document.getElementById('in').value = original+nfc+nfd;
+	newlist = document.getElementById('in').value;
+	lc=document.getElementById('in').value.toLowerCase();
+	uc=document.getElementById('in').value.toUpperCase();
+	document.getElementById('in').value = newlist+lc+uc">Get all forms</button>
 </div>
 <p>
 <button onclick="makeList(document.getElementById('in').value)">Analyse the text above</button></p>
