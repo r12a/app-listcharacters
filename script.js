@@ -36,31 +36,49 @@ function chars2cps ( chars ) {
 	}
 
 
+function gatherAll () {
+	// get all the characters shown and put in th element so they can be picked up
+	
+	var all = ''
+	var tds = document.querySelectorAll('.chars')
+	for (let i=0;i<tds.length;i++)  all += tds[i].textContent
+	document.getElementById('gatheringPlace').textContent = all
+	}
+
+
+
+
+
+
 function makeList (stream) {
 	stream = stream.replace(/ /g,'')
+	stream = stream.replace(/\x0A/g,'')
 	var cps = chars2cps(stream)
 	
-	// make an object with char counts per script group
+	// make a scriptGroups object that contains one entry per script detected
+	// each entry is an object named after the script group, eg. "Supplemental Punctuation"
+	// which has 2 subentries: .all and .unique, lists of characters found
 	var scriptGroups = {}
 	for (var i=0;i<cps.length;i++) {
 		var scriptGroup = findScriptGroup(cps[i])
 		if (scriptGroups[scriptGroup] == null) {
 			scriptGroups[scriptGroup] = {}
-			scriptGroups[scriptGroup].all = String.fromCodePoint(cps[i])+'\u200B'
-			scriptGroups[scriptGroup].unique = String.fromCodePoint(cps[i])+'\u200B'
+			scriptGroups[scriptGroup].all = String.fromCodePoint(cps[i])
+			scriptGroups[scriptGroup].unique = String.fromCodePoint(cps[i])
 			}
 		else {
 			var char = String.fromCodePoint(cps[i])
-			scriptGroups[scriptGroup].all += char+'\u200B'
+			scriptGroups[scriptGroup].all += char
 			var re = new RegExp(escapeRegExp(char));
-			if (! scriptGroups[scriptGroup].unique.match(re)) scriptGroups[scriptGroup].unique += char+'\u200B'
+			if (! scriptGroups[scriptGroup].unique.match(re)) scriptGroups[scriptGroup].unique += char
 			}
 		}
-		
+
 	// output the list 
 	var out = '<table><tbody>\n'
 	var keys = Object.keys(scriptGroups)
 	keys.sort()
+
 	// check whether a unique column is needed
 	var uniqueNeeded = false
 	for (var x=0;x<keys.length;x++) {
@@ -69,22 +87,23 @@ function makeList (stream) {
 			break
 			}
 		}
-	if (uniqueNeeded) out += '<tr><th></th><th>Unique</th><th>Total</th><th></th></tr>'	
+	if (uniqueNeeded) out += '<tr><th></th><th>Unique</th><th>Total</th><th id="gatheringPlace"></th><th class="select" title="Copy ALL to clipboard" onclick="gatherAll(); copyToClipboard(this.previousSibling)"><img src="copy.png"></th></tr>'	
+	
 	// construct a table
 	var uniqueTotal = 0
 	for (x=0;x<keys.length;x++) {
 		out += '<tr>'
 		out += '<th class="sg">'+keys[x]+'</th>'
-		var count = scriptGroups[keys[x]].unique.length/2
+		var count = [...scriptGroups[keys[x]].unique].length
 		uniqueTotal += count
 		out += '<td class="count">'+count+'</td>'
 		if (uniqueNeeded && scriptGroups[keys[x]].unique.length != scriptGroups[keys[x]].all.length){
-			count = scriptGroups[keys[x]].all.length/2
+			count = [...scriptGroups[keys[x]].all].length
 			out += '<td class="count">'+count+'</td>'
 			}
 		else if (uniqueNeeded) out += '<td class="count"></td>'
 		let uniqueArray = [...scriptGroups[keys[x]].unique]
-		uniquelist = uniqueArray.sort().join('')
+		uniquelist = uniqueArray.sort().join('\u200B')
 		out += '<td class="chars">'+uniquelist+'</td>'
 		out += '<td class="select" title="Copy to clipboard" onclick="copyToClipboard(this.previousSibling)"><img src="copy.png"></td>'
 		out += '</tr>\n'
