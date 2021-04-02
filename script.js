@@ -115,9 +115,9 @@ function makeList (stream) {
 			}
 		else if (uniqueNeeded) out += '<td class="count"></td>'
 		let uniqueArray = [...scriptGroups[keys[x]].unique]
-		//uniquelist = uniqueArray.sort().join('\u200B')
-		uniquelist = uniqueArray.sort().join('')
+		//uniquelist = uniqueArray.sort().join('')
 		//out += '<td class="chars">'+uniquelist+'</td>'
+        uniquelist = uniqueArray.sort()
 		out += '<td class="chars">'
         for (i=0;i<uniquelist.length;i++) out += '<bdi>'+uniquelist[i]+'</bdi>'
 		out += '</td>'
