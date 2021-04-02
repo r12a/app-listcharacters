@@ -21,7 +21,7 @@
 </header>
 
 <p style="margin-bottom:0; font-size: 60%; cursor: pointer;" onClick="document.getElementById('in').value = '';">Clear all</p>
-<p style="margin-bottom: 0; margin-top: 0;"><textarea id="in" style="width: 80%; height: 400px;" placeholder="Drop text to be analysed here."></textarea></p>
+<p style="margin-bottom: 0; margin-top: 0;"><textarea id="in" style="width: 80%; height: 150px;" placeholder="Drop text to be analysed here."></textarea></p>
 <div style="text-align: center;">
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFC')">Convert to NFC</button>
 <button onClick="document.getElementById('in').value = document.getElementById('in').value.normalize('NFD')">Convert to NFD</button>
@@ -39,40 +39,68 @@
 <p id="out"></p>
 
 
-    <details id="comparison">
-    <summary style="margin-top: 5em; cursor: pointer;">Compare lists</summary>
-    <div id="comparisonInput">
-    <div><textarea name="left" id="leftList" cols="30" rows="10"></textarea><p id="leftResult">Characters unique to this side:<br/><span id="leftOut"></span><br/><a id="leftOutLink" href="../app-analysestring/?chars=" target="_blank">Show details</a></p></div>
-    <div style="margin: 2em;"><button onClick="compareLists()">Compare</button></div>
-    <div><textarea name="right" id="rightList" cols="30" rows="10"></textarea><p id="rightResult">Characters unique to this side:<br/><span id="rightOut"></span><br/><a id="rightOutLink" href="../app-analysestring/?chars=" target="_blank">Show details</a></p></div>
-    </div>
-    <div style="font-size: 90%;"><p id="bothResult" style="margin-right:0;">Characters on both sides:<br/><span id="bothOut"></span><br/><a id="bothOutLink" href="../app-analysestring/?chars=" target="_blank">Show details</a></p></div>
-    </details>
 
 
 
 
-<details>
-<summary style="margin-left: 7.5%; cursor:pointer;"><strong>Notes</strong></summary>
+<section id="comparison">
+<h2>Compare lists</h2>
+
+<div id="comparisonInput">
+<div><textarea name="left" id="leftList" cols="30" rows="10"></textarea><p id="leftResult">Characters unique to this side:<br/><span id="leftOut"></span> <a id="leftOutLink" target="_blank" onclick="this.href='../../../app-analysestring/?chars='+encodeURI(document.getElementById('leftOut').textContent)"><img src="share.png" alt="Show details"></a></p></div>
+<div><textarea name="right" id="rightList" cols="30" rows="10"></textarea><p id="rightResult">Characters unique to this side:<br/><span id="rightOut"></span> <a id="rightOutLink"  target="_blank" onclick="this.href='../../../app-analysestring/?chars='+encodeURI(document.getElementById('rightOut').textContent)"><img src="share.png" alt="Show details"></a></p></div>
+<div>
+<p><button onClick="compareLists()">Compare</button></p>
+<p id="bothResult" style="margin-right:0;">Characters on both sides:<br/><span id="bothOut"></span> <a id="bothOutLink" target="_blank" onclick="this.href='../../../app-analysestring/?chars='+encodeURI(document.getElementById('bothOut').textContent)"><img src="share.png" alt="Show details"></a></p></div>
+</div>
+
+<!--div><button onClick="compareLists()">Compare</button></div-->
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<div id="notes" style=" background-color: bisque; margin-top:4em; padding: 1em; ">
+
+<p>This tool analyses  text, finds all the characters used, and shows one instance of each character, grouped by Unicode block.</p>
+
+<detailsx>
+<summary>show more</summary>
 
 <aside class="sidebar">
   <div class="section">
-    <h2 class="flush">Related links</h2>
+  <h2 class="flush">Related links</h2>
+    <p><a target="_blank" href="../scripts/apps/listcategories/">Triage by category</a></p>
+    <p><a target="_blank" href="../scripts/apps/listlinebreak/">Triage for linebreaking</a></p>
+    <p><a target="_blank" href="../scripts/apps/listbidi/">Triage by bidi_class</a></p>
     <p><a target="_blank" href="../uniview/">UniView</a></p>
     <p><a target="_blank" href="../app-conversion/">Unicode code converter</a></p>
   </div>
 </aside>
 
-<p id="status">Updated Fri 27 Oct 2017  &bull; tags <a href="https://r12a.github.io/blog/index.php?tag=counterstyles" title="Show all blog posts tagged with 'unicode'">unicode</a>, <a href="https://r12a.github.io/blog/index.php?tag=counterstyles" title="Show all blog posts tagged with 'encoding'">encoding</a>, <a href="https://r12a.github.io/blog/?tag=apps" title="Show all blog posts tagged with 'apps'">apps</a></p>
 
 <section>
-  <p>This app analyses the characters in text that you paste into the large box at the top, and produces a list of what characters were used, grouped by Unicode block.</p>
-  <p>To identify characters and look up information about them you will find <a href="/uniview/">UniView</a> extremely useful. You can paste Unicode characters into the UniView <code class="kw" translate="no">Edit Buffer</code> and click on the down-arrow icon below to find out what they are. (Click on the name that appears for more detailed information.)</p>
-  <p>The <img src="copy.png" alt="Copy"> icon copies the content of the field to its left to your clipboard, ready for you to paste elsewhere. Using this method to copy the characters, rather than highlighting the text and pressing Cmd/Ctrl+C, removes the zero width spaces that are used to separate characters for display. This will not work, however, on Safari or other browsers using the webkit engine.</p>
-  <p>The <samp>Get all forms</samp> button produces 4 copies of the content in the input area. The copies are, respectively, all lowercase, all uppercase, all NFC normalised, and all NFD normalised.</p>
+<p>The <img src="copy.png" alt="Copy"> icon copies the characters on that row to your clipboard, ready for you to paste elsewhere.  This will not work, however, on Safari or other browsers using the webkit engine.</p>
+  <p>The <img src="share.png" alt="Show details"> icon opens a separate window with an app that displays basic information about the characters for that row.</p>
+<p>The <samp>Get all forms</samp> button produces 4 copies of the content in the input area. The copies are, respectively, all lowercase, all uppercase, all NFC normalised, and all NFD normalised.</p>
 </section>
-
+<p id="status">Updated 
+<!-- #BeginDate format:Sw1 -->2 April, 2021<!-- #EndDate -->
+</p>
 </details>
+</div>
+
+
+<input id="preCopy" style="height;2px; width: 2px; border: 0;">
+
 
 <div class="smallprint"><span id="version">
 See <a href="https://github.com/r12a/app-listcharacters/commits/gh-pages">recent changes</a>.

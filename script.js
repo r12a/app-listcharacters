@@ -42,10 +42,21 @@ function gatherAll () {
 	var all = ''
 	var tds = document.querySelectorAll('.chars')
 	for (let i=0;i<tds.length;i++)  all += tds[i].textContent
-	document.getElementById('gatheringPlace').textContent = all
+	//document.getElementById('gatheringPlace').textContent = all
+    return all
 	}
 
-
+function getAll () { 
+	// copies characters to clipboard when you click on the stats
+	var all = ''
+	var tds = document.querySelectorAll('.chars')
+	for (let i=0;i<tds.length;i++)  all += tds[i].textContent
+	document.getElementById('preCopy').value = all
+		
+	document.getElementById('preCopy').focus()
+	document.getElementById('preCopy').select()
+	document.execCommand('copy')
+	}
 
 
 
@@ -75,7 +86,7 @@ function makeList (stream) {
 		}
 
 	// output the list 
-	var out = '<table><tbody>\n'
+	var out = '<table>\n'
 	var keys = Object.keys(scriptGroups)
 	keys.sort()
 
@@ -87,7 +98,8 @@ function makeList (stream) {
 			break
 			}
 		}
-	if (uniqueNeeded) out += '<tr><th></th><th>Unique</th><th>Total</th><th id="gatheringPlace"></th><th class="select" title="Copy ALL to clipboard" onclick="gatherAll(); copyToClipboard(this.previousSibling)"><img src="copy.png"></th></tr>'	
+	
+    out += '<tbody>\n'
 	
 	// construct a table
 	var uniqueTotal = 0
@@ -103,15 +115,21 @@ function makeList (stream) {
 			}
 		else if (uniqueNeeded) out += '<td class="count"></td>'
 		let uniqueArray = [...scriptGroups[keys[x]].unique]
-		uniquelist = uniqueArray.sort().join('\u200B')
-		out += '<td class="chars">'+uniquelist+'</td>'
-		out += '<td class="select" title="Copy to clipboard" onclick="copyToClipboard(this.previousSibling)"><img src="copy.png"></td>'
+		//uniquelist = uniqueArray.sort().join('\u200B')
+		uniquelist = uniqueArray.sort().join('')
+		//out += '<td class="chars">'+uniquelist+'</td>'
+		out += '<td class="chars">'
+        for (i=0;i<uniquelist.length;i++) out += '<bdi>'+uniquelist[i]+'</bdi>'
+		out += '</td>'
+		out += '<td class="select" title="Copy to clipboard" onclick="copyToClipboard(this.previousSibling)"><img src="copy.png" alt="Copy to clipboard" title="Copy to clipboard">'
+        out += ' <a title="Show a list with details." href="../../../app-analysestring/?chars='+encodeURI(scriptGroups[keys[x]].unique)+'" target="_blank"><img src="share.png"></a></td>'
+        //out += ' <a title="Show a list with details." href="../../../app-analysestring/?chars='+encodeURI(scriptGroups[keys[x]])+'" target="_blank"><img src="share.png"></a></td>'
 		out += '</tr>\n'
 		}
 	out += '</tbody></table>'
 	
 	out += '<p class="total">Total characters: '+cps.length+"</p>"
-	out += '<p class="total">Total unique characters: '+uniqueTotal+"</p>"
+	out += '<p class="total">Total unique characters: '+uniqueTotal+'<img title="Copy ALL to clipboard" onclick="getAll()" alt="Copy to clipboard" style="margin-left:3em; width: 18px;" src="copy.png">'+"</p>"
 	out += '<p class="total">Total blocks: '+keys.length+"</p>"
 	
 	document.getElementById('out').innerHTML = out
@@ -119,14 +137,14 @@ function makeList (stream) {
 
 
 function copyToClipboard (node) {
-	var oldContent = node.textContent
-	node.textContent=node.textContent.replace(/\u200B/g,'')
+	//var oldContent = node.textContent
+	//node.textContent=node.textContent.replace(/\u200B/g,'')
 	node.contentEditable=true
 	node.focus()
 	document.execCommand('selectAll')
 	document.execCommand('copy')
 	node.contentEditable=false
-	node.textContent=oldContent
+	//node.textContent=oldContent
 	}
 
 
