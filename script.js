@@ -122,8 +122,8 @@ function makeList (stream) {
         for (i=0;i<uniquelist.length;i++) out += '<bdi>'+uniquelist[i]+'</bdi>'
 		out += '</td>'
 		out += '<td class="select" title="Copy to clipboard" onclick="copyToClipboard(this.previousSibling)"><img src="copy.png" alt="Copy to clipboard" title="Copy to clipboard">'
-        out += ' <a title="Show a list with details." href="../../../app-analysestring/?chars='+encodeURI(scriptGroups[keys[x]].unique)+'" target="_blank"><img src="share.png"></a></td>'
-        //out += ' <a title="Show a list with details." href="../../../app-analysestring/?chars='+encodeURI(scriptGroups[keys[x]])+'" target="_blank"><img src="share.png"></a></td>'
+        out += ' <a title="Show a list with details." href="../app-analysestring/index.html?chars='+encodeURI(scriptGroups[keys[x]].unique)+'" target="_blank"><img src="share.png"></a></td>'
+        //out += ' <a title="Show a list with details." href="../app-analysestring/?chars='+encodeURI(scriptGroups[keys[x]])+'" target="_blank"><img src="share.png"></a></td>'
 		out += '</tr>\n'
 		}
 	out += '</tbody></table>'
@@ -172,7 +172,7 @@ function compareLists () {
         if (! found && ! leftResult.includes(leftArray[i])) leftResult += leftArray[i]+' '
         }
     document.getElementById('leftOut').textContent = leftResult
-    document.getElementById('leftOutLink').href = "../app-analysestring/?chars="+leftResult
+    document.getElementById('leftOutLink').href = "../app-analysestring/index.html?chars="+leftResult
 
     for (let i=0;i<rightArray.length;i++) {
         var found = false
@@ -182,12 +182,12 @@ function compareLists () {
         if (! found && ! rightResult.includes(rightArray[i])) rightResult += rightArray[i]+' '
         }
     document.getElementById('rightOut').textContent = rightResult
-    document.getElementById('rightOutLink').href = "../app-analysestring/?chars="+rightResult
+    document.getElementById('rightOutLink').href = "../app-analysestring/index.html?chars="+rightResult
 	
 	var bothArray = [...bothResult]
 	bothArray = bothArray.filter((x, i, a) => a.indexOf(x) == i)
     document.getElementById('bothOut').textContent = bothArray.join(' ')
-    document.getElementById('bothOutLink').href = "../app-analysestring/?chars="+bothResult
+    document.getElementById('bothOutLink').href = "../app-analysestring/index.html?chars="+bothResult
 
     }
 
